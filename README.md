@@ -1,2 +1,2 @@
-# Hoyoclub-Bot
-A discord bot I made for a school club
+# Hu-Tao-Bot
+A discord bot for Hoyoclub
