@@ -27,6 +27,9 @@ async def on_message(message):
     if message.author == client.user: # prevents reading its own messages
         return
 
+    if message.channel.name == "announcements": # prevents responding in announcements
+        return
+
     text = message.content.lower() # gets lowered message content
     if text.startswith(responses.gm_messages): # checks for good mornings
         await message.channel.send(random.choice(responses.gm_responses)) # responds with a gm
