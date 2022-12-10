@@ -3,4 +3,4 @@ WORKDIR /bot
 COPY requirements.txt /bot/
 RUN pip install -r requirements.txt
 COPY . /bot
-CMD python "./Hu-Tao-Bot/main.py"
+CMD python ./Hu-Tao-Bot/main.py
