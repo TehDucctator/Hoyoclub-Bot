@@ -1,14 +1,22 @@
 import os, random
 import discord
-from discord.ext import tasks
-import responses
+from discord.ext import tasks, commands
 
 intents = discord.Intents.default()
 intents.message_content = True
 
-client = discord.Client(intents=intents)
+class MyBot(commands.Bot):
+    async def setup_hook(self):
+        cog_files = ['autoresponder.responder']
+
+        for cog_file in cog_files:
+            await client.load_extension(cog_file)
+            print(f"{cog_file} loaded")
+
+client = MyBot(command_prefix="ht!", intents=intents)
 
 status = ["with coffins", "with Qiqi", "with fire, shh", "with ghosts", "with Boo Tao"] # statuses to go through
+
 @client.event
 async def on_ready():
     print(f'We have logged in as {client.user}')
@@ -22,20 +30,6 @@ async def change_status():
 async def restart_status(): # restart change_status
     change_status.restart()
 
-@client.event
-async def on_message(message):
-    if message.author.bot: # prevents reading bot messages
-        return
-
-    if message.channel.name == "announcements": # prevents responding in announcements
-        return
-
-    text = message.content.lower() # gets lowered message content
-    if text.startswith(responses.gm_messages): # checks for good mornings
-        await message.channel.send(random.choice(responses.gm_responses)) # responds with a gm
-
-    if text.startswith(responses.gn_messages): # checks for good nights
-        await message.channel.send(random.choice(responses.gn_responses)) # responds with a gn
 
 if __name__ == "__main__":
     client.run(os.getenv('TOKEN'))
