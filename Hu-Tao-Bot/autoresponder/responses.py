@@ -1,3 +1,5 @@
+import random
+
 gm_messages = tuple(["good mornin", "gm", "mornin"]) # good morning prompts to respond to
 
 gm_responses = ["Good morning!",
@@ -15,3 +17,14 @@ gn_responses = ["Oh, you sleepy? Get some rest, I'm gonna take a walk by myself"
                 "Good night, those late to bed I shall forewarn",
                 "Good night! Would you like a coffin to sleep in?",
                 "Good night! See you on the other side!"]
+
+
+def get_response(text):
+    triggers = [gm_messages, gn_messages]
+    replies = [gm_responses, gn_responses]
+
+    for i, content in enumerate(triggers):
+        if text.startswith(content):
+            return random.choice(replies[i])
+
+    return ""

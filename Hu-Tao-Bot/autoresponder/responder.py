@@ -1,12 +1,10 @@
-import random
-import discord
 from discord.ext import commands
 
 import autoresponder.responses as responses
 
 class Autoresponder(commands.Cog):
-    def __init__(self, client):
-        self.client = client
+    def __init__(self):
+        pass
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -17,11 +15,9 @@ class Autoresponder(commands.Cog):
             return
 
         text = message.content.lower() # gets lowered message content
-        if text.startswith(responses.gm_messages): # checks for good mornings
-            await message.channel.send(random.choice(responses.gm_responses)) # responds with a gm
-
-        if text.startswith(responses.gn_messages): # checks for good nights
-            await message.channel.send(random.choice(responses.gn_responses)) # responds with a gn
+        response = responses.get_response(text) # get response to text
+        if response: # send response if text is a trigger
+            await message.channel.send(response) 
 
 async def setup(client):
-    await client.add_cog(Autoresponder(client))
+    await client.add_cog(Autoresponder())
