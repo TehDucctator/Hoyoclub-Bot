@@ -63,11 +63,11 @@ class StreamList(commands.Cog):
 
     @commands.hybrid_group(name="stream", fallback="show")
     async def stream(self, ctx):
-        embed = discord.Embed(title=f"List of Streamers (current pos: {self.queues[self.find_stream_list(ctx)].current+1})")
         index = self.find_stream_list(ctx)
         if index == None:
             await ctx.send("Could not find a list in this channel")
         else:
+            embed = discord.Embed(title=f"List of Streamers (current pos: {self.queues[self.find_stream_list(ctx)].current+1})")
             streamers = ""
             for i, streamer in enumerate(self.queues[index].q):
                 streamers += f"{i+1}. {streamer[0].mention}, status: {'streamed' if streamer[1] else 'waiting'}\n"
