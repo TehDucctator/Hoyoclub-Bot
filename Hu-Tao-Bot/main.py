@@ -8,13 +8,14 @@ intents.message_content = True
 class MyBot(commands.Bot):
     async def setup_hook(self):
         cog_files = ['autoresponder.responder',
-                     'commands.stream_list']
+                     'commands.stream_list',
+                     'commands.helpcmds']
 
         for cog_file in cog_files:
             await client.load_extension(cog_file)
             print(f"{cog_file} loaded")
 
-client = MyBot(command_prefix="ht!", intents=intents)
+client = MyBot(command_prefix="ht!", intents=intents, help_command=None)
 
 status = ["with coffins", "with Qiqi", "with fire, shh", "with ghosts", "with Boo Tao"] # statuses to go through
 

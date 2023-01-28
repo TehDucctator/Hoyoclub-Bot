@@ -25,7 +25,7 @@ class ConfirmButtonView(discord.ui.View):
             self.stop()
 
     @discord.ui.button(label="End", style=discord.ButtonStyle.red)
-    async def End(self, interaction: discord.Interaction, button: discord.ui.Button):
+    async def end(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user.id == self.author.id:
             self.confirmed = True
             await self.disable_all_items()
@@ -55,7 +55,6 @@ class StreamList(commands.Cog):
                 return False
 
 
-
     def find_stream_list(self, ctx):
         for i, q in enumerate(self.queues):
             if ctx.channel.id == q.channel:
@@ -64,7 +63,7 @@ class StreamList(commands.Cog):
 
     @commands.hybrid_group(name="stream", fallback="show")
     async def stream(self, ctx):
-        embed = discord.Embed(title=f"List of Streamers (current pos: {self.queues[self.find_stream_list(ctx)].current})")
+        embed = discord.Embed(title=f"List of Streamers (current pos: {self.queues[self.find_stream_list(ctx)].current+1})")
         index = self.find_stream_list(ctx)
         if index == None:
             await ctx.send("Could not find a list in this channel")
