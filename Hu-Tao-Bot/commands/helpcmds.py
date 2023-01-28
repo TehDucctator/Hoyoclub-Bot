@@ -5,7 +5,7 @@ class HelpCmds(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="help")
+    @commands.hybrid_command(name="help")
     async def help(self, ctx):
         embed = discord.Embed(title="Commands", description="List of commands and what they do")
         embed.add_field(name="help", value="This command! Shows all commands")
