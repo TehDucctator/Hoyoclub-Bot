@@ -178,9 +178,12 @@ class StreamList(commands.Cog):
     @next.error
     @add.error
     @remove.error
-    async def not_exec_error(self, ctx, error):
+    async def exec_cmd_error(self, ctx, error):
         print(error)
-        await ctx.send("Only execs can do this")
+        if "required" in str(error):
+            await ctx.send("Only execs can do this")
+        else:
+            await ctx.send("An error occured :/")
 
 
 async def setup(client):
