@@ -4,8 +4,7 @@ def get_response(text):
     triggers = [(gm_triggers, gm_responses), 
                 (gn_triggers, gn_responses), 
                 (good_afternoon_triggers, good_afternoon_responses), 
-                (good_evening_triggers, good_evening_responses), 
-                (hbd_triggers, hbd_responses)]
+                (good_evening_triggers, good_evening_responses)]
 
     for content in triggers:
         if text.startswith(tuple(content[0])):
@@ -49,13 +48,3 @@ good_evening_responses = ["Hee-hee, moon's out, and so am I!",
                           "Good evening! Do you like to star gaze?",
                           "Good evening! Do you think the stars are our ancestors?",
                           "Good evening! Are you watching the sunset?"]
-
-hbd_triggers = ["hbd", "happy birthday", "happy bday"]
-
-hbd_responses = ["Tonight the stars are dazzling and the moon majestic, it must be a special day... But just what day could it be... Haha, I know, I know! It's your birthday! It really is a great day.",
-                 "Happy birthday!"
-                 "Happy birthday! Would you like a coffin?"
-                 "Happy birthday! We offer birthday discounts on our coffins, would you like one?",
-                 "Happy birthday! You're one year closer to using a coffin hehe",
-                 "Happy birthday! Would you like me to help you cross over?",
-                 "Happy birthday! I wonder how many you have left"]
