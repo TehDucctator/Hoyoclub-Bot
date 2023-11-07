@@ -4,12 +4,14 @@ from discord.ext import tasks, commands
 
 intents = discord.Intents.default()
 intents.message_content = True
+intents.voice_states = True
 
 class MyBot(commands.Bot):
     async def setup_hook(self):
         cog_files = ['autoresponder.responder',
                      'commands.stream_list',
-                     'commands.helpcmds']
+                     'commands.helpcmds',
+                     'commands.attendance_tracker']
 
         for cog_file in cog_files:
             await client.load_extension(cog_file)
