@@ -67,7 +67,7 @@ class StreamList(commands.Cog):
         if index == None:
             await ctx.send("Could not find a list in this channel")
         else:
-            embed = discord.Embed(title=f"List of Streamers (current pos: {self.queues[self.find_stream_list(ctx)].current+1})")
+            embed = discord.Embed(title=f"List of Streamers (current pos: {self.queues[self.find_stream_list(ctx)].current+1})", color=discord.Color.random())
             streamers = ""
             for i, streamer in enumerate(self.queues[index].q):
                 streamers += f"{i+1}. {streamer[0].mention}, status: {'streamed' if streamer[1] else 'waiting'}\n"
@@ -180,7 +180,7 @@ class StreamList(commands.Cog):
     @remove.error
     async def exec_cmd_error(self, ctx, error):
         print(error)
-        if "required" in str(error):
+        if "Executives" in str(error):
             await ctx.send("Only execs can do this")
         else:
             await ctx.send("An error occured :/")

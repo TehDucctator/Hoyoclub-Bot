@@ -14,15 +14,21 @@ class HelpCmds(commands.Cog):
                     "leave - Leave the list of streamers in the current channel",
                     "show - (or just \"stream\") Shows the list of streamers in the current channel"]
 
-        embed.add_field(name="stream...", value=" - stream " + "\n - stream ".join(cmd_list), inline=False)
+        embed.add_field(name="stream...", value=" - stream " + "\n- stream ".join(cmd_list), inline=False)
         
-        exec_only = ["next - Moves onto the next streamer in the list",
+        exec_stream_list = ["next - Moves onto the next streamer in the list",
                      "create - Creates an empty list of streamers for the current channel (one per channel)",
                      "end - Ends the list of streamers for the current channel",
                      "add - Add a member to the list of streamers",
                      "remove - Remove a member from the list of streamers"]
 
-        embed.add_field(name="stream... (Exec only)", value=" - stream " + "\n - stream ".join(exec_only), inline=False)
+        embed.add_field(name="stream...", value=" - stream " + "\n- stream ".join(exec_stream_list), inline=False)
+
+        exec_attendance = ["show - shows list of attendees, past and present, in specified or current vc of caller, with their total time",
+                           "create - (Exec only) creates attendance tracker for specified or current vc of caller"
+                           "end - (Exec only) ends attendance tracker for specified or current vc of caller"]
+        
+        embed.add_field(name="attendance...", value=" - attendance " + "\n- attendance ".join(exec_attendance), inline=False)
 
         await ctx.send(embed=embed)
     
