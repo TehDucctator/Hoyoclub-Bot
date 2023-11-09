@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands
 
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 from utils.buttons import ConfirmButtonView
 
@@ -17,8 +18,8 @@ class Attendee():
 
     def update_time(self):
         if self.active:
-            self.time += datetime.now(tz=timezone.utc) - self.last_update
-            self.last_update = datetime.now(tz=timezone.utc)
+            self.time += datetime.now(tz=ZoneInfo("America/New_York")) - self.last_update
+            self.last_update = datetime.now(tz=ZoneInfo("America/New_York"))
 
     def on_leave(self):
         self.update_time()
@@ -26,13 +27,13 @@ class Attendee():
     
     def on_join(self):
         self.active = True
-        self.recent_join_time = datetime.now(tz=timezone.utc)
+        self.recent_join_time = datetime.now(tz=ZoneInfo("America/New_York"))
 
 class Event():
     def __init__(self, voice_channel) -> None:
         self.voice_channel = voice_channel
         self.attendees = set()
-        self.start_time = datetime.now()
+        self.start_time = datetime.now(tz=ZoneInfo("America/New_York"))
 
     def add_attendee(self, attendee) -> None:
         self.attendees.add(attendee)
@@ -117,7 +118,7 @@ class AttendanceTracker(commands.Cog):
             return
         
         embed = discord.Embed(title=f"Attendees (<#{channel_id}>):", 
-                              description=f"Time: {datetime.now().strftime('%m/%d, %I:%M%p')}", 
+                              description=f"Time: {datetime.now(tz=ZoneInfo('America/New_York')).strftime('%m/%d, %I:%M%p')}", 
                               color=discord.Color.random())
         attendees = ""
 
@@ -131,7 +132,7 @@ class AttendanceTracker(commands.Cog):
         await ctx.send(embed=embed)
     
     @tracker.command(name="start")
-    @commands.has_role("Executives")
+    @commands.has_role("Fatui")
     async def event_create(self, ctx, channel_mention : str = None) -> None:
         """Adds current or specified vc for tracking"""
         # identifies desired vc
@@ -156,10 +157,10 @@ class AttendanceTracker(commands.Cog):
         # adds members already connected to vc
         voice = self.bot.get_channel(channel_id)
         for id in voice.voice_states.keys():
-            event.add_attendee(Attendee(voice.guild.get_member(id), datetime.now(tz=timezone.utc)))
+            event.add_attendee(Attendee(voice.guild.get_member(id), datetime.now(tz=ZoneInfo("America/New_York"))))
 
     @tracker.command(name="end")
-    @commands.has_role("Executives")
+    @commands.has_role("Fatui")
     async def event_end(self, ctx, channel_mention : str = None) -> None:
         """Ends tracking for specified or current vc"""
         # identifies desired vc
@@ -206,7 +207,7 @@ class AttendanceTracker(commands.Cog):
                         attendee.on_join()
 
                 except IndexError: # create new attendee object if new
-                    event.add_attendee(Attendee(member, datetime.now(tz=timezone.utc)))
+                    event.add_attendee(Attendee(member, datetime.now(tz=ZoneInfo("America/New_York"))))
             
             # left channel with tracking
             elif before.channel != None and before.channel.id in [event.voice_channel for event in self.events]:
@@ -225,7 +226,7 @@ class AttendanceTracker(commands.Cog):
     @event_end.error
     async def exec_cmd_error(self, ctx, error):
         print(error)
-        if "Executives" in str(error):
+        if "Fatui" in str(error):
             await ctx.send("Only execs can do this")
         else:
             await ctx.send("An error occured :/")

@@ -45,7 +45,7 @@ class StreamList(commands.Cog):
             await ctx.send(embed=embed)
 
     @stream.command(name="create")
-    @commands.has_role("Executives")
+    @commands.has_role("Fatui")
     async def create_stream(self, ctx):
         if ctx.channel.id in [q.channel for q in self.queues]:
             await ctx.send("There is already a stream going on")
@@ -55,7 +55,7 @@ class StreamList(commands.Cog):
             await ctx.send("stream created")
 
     @stream.command(name="end")
-    @commands.has_role("Executives")
+    @commands.has_role("Fatui")
     async def end_stream(self, ctx):
         index = None
         for i, id in enumerate([q.channel for q in self.queues]):
@@ -108,7 +108,7 @@ class StreamList(commands.Cog):
                 await ctx.send("You are not on the list")
 
     @stream.command(name="next")
-    @commands.has_role("Executives")
+    @commands.has_role("Fatui")
     async def next(self, ctx):
         index = self.find_stream_list(ctx)
         if index == None:
@@ -121,7 +121,7 @@ class StreamList(commands.Cog):
                 await ctx.send("No one is next")
 
     @stream.command(name="add")
-    @commands.has_role("Executives")
+    @commands.has_role("Fatui")
     async def add(self, ctx, user):
         index = self.find_stream_list(ctx)
         if index == None:
@@ -131,7 +131,7 @@ class StreamList(commands.Cog):
             await ctx.send(f"{user} added")
 
     @stream.command(name="remove")
-    @commands.has_role("Executives")
+    @commands.has_role("Fatui")
     async def remove(self, ctx, position):
         index = self.find_stream_list(ctx)
         if index == None:
@@ -149,7 +149,7 @@ class StreamList(commands.Cog):
     @remove.error
     async def exec_cmd_error(self, ctx, error):
         print(error)
-        if "Executives" in str(error):
+        if "Fatui" in str(error):
             await ctx.send("Only execs can do this")
         else:
             await ctx.send("An error occured :/")
