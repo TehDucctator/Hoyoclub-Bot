@@ -1,19 +1,23 @@
-import os, random
+import os
 import discord
 from discord.ext import tasks, commands
 
 intents = discord.Intents.default()
 intents.message_content = True
+intents.voice_states = True
 
 class MyBot(commands.Bot):
     async def setup_hook(self):
-        cog_files = ['autoresponder.responder']
+        cog_files = ['autoresponder.responder',
+                     'commands.stream_list',
+                     'commands.helpcmds',
+                     'commands.attendance_tracker']
 
         for cog_file in cog_files:
             await client.load_extension(cog_file)
             print(f"{cog_file} loaded")
 
-client = MyBot(command_prefix="ht!", intents=intents)
+client = MyBot(command_prefix="ht!", intents=intents, help_command=None)
 
 status = ["with coffins", "with Qiqi", "with fire, shh", "with ghosts", "with Boo Tao"] # statuses to go through
 
@@ -30,6 +34,19 @@ async def change_status():
 async def restart_status(): # restart change_status
     change_status.restart()
 
+@commands.command()
+@commands.is_owner()
+async def sync(ctx, arg=None):
+    if arg in ("all", None):
+        await client.tree.sync()
+        await ctx.send("synced commands everywhere")
+    elif arg == "current":
+        await client.tree.sync(guild=ctx.guild)
+        await ctx.send("synced commands here")
+    else:
+        await ctx.send("invalid argument")
+
+client.add_command(sync)
 
 if __name__ == "__main__":
     client.run(os.getenv('TOKEN'))
