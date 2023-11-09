@@ -7,7 +7,9 @@ class HelpCmds(commands.Cog):
 
     @commands.hybrid_command(name="help")
     async def help(self, ctx):
-        embed = discord.Embed(title="Commands", description="List of commands and what they do")
+        embed = discord.Embed(title="Commands", 
+                              description="List of commands and what they do",
+                              color=discord.Color.random())
         embed.add_field(name="help", value="This command! Shows all commands")
 
         cmd_list = ["join - Join the list of streamers in the current channel",
