@@ -24,13 +24,14 @@ class HelpCmds(commands.Cog):
                      "add - Add a member to the list of streamers",
                      "remove - Remove a member from the list of streamers"]
 
-        embed.add_field(name="stream...", value=" - stream " + "\n- stream ".join(exec_stream_list), inline=False)
+        embed.add_field(name="stream... (Exec only)", value=" - stream " + "\n- stream ".join(exec_stream_list), inline=False)
 
-        exec_attendance = ["show - shows list of attendees, past and present, in specified or current vc of caller, with their total time",
-                           "create - (Exec only) creates attendance tracker for specified or current vc of caller"
-                           "end - (Exec only) ends attendance tracker for specified or current vc of caller"]
+        attendance = ["snapshot - shows a list of members currently in the current or specified vc",
+                      "show - (or just \"attendance\") shows the list of attendees, past and present, in specified or current **tracked** vc of caller, with their total time",
+                      "create - (Exec only) creates attendance tracker for specified or current vc of caller",
+                      "end - (Exec only) ends attendance tracker for specified or current vc of caller"]
         
-        embed.add_field(name="attendance...", value=" - attendance " + "\n- attendance ".join(exec_attendance), inline=False)
+        embed.add_field(name="attendance...", value=" - attendance " + "\n- attendance ".join(attendance), inline=False)
 
         await ctx.send(embed=embed)
     

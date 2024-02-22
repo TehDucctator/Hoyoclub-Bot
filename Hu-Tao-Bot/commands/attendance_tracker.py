@@ -19,7 +19,8 @@ class Attendee():
     def update_time(self):
         if self.active:
             self.time += datetime.now(tz=ZoneInfo("America/New_York")) - self.last_update
-            self.last_update = datetime.now(tz=ZoneInfo("America/New_York"))
+        
+        self.last_update = datetime.now(tz=ZoneInfo("America/New_York"))
 
     def on_leave(self):
         self.update_time()
@@ -27,7 +28,7 @@ class Attendee():
     
     def on_join(self):
         self.active = True
-        self.recent_join_time = datetime.now(tz=ZoneInfo("America/New_York"))
+        self.last_update = datetime.now(tz=ZoneInfo("America/New_York"))
 
 class Event():
     def __init__(self, voice_channel) -> None:
